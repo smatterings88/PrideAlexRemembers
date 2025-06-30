@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Add retry logic and better error handling
-    let response;
+    let response: Response | null = null;
     let retryCount = 0;
     const maxRetries = 3;
 
@@ -120,6 +120,14 @@ export async function POST(request: NextRequest) {
         // Wait before retrying (exponential backoff)
         await new Promise(resolve => setTimeout(resolve, Math.pow(2, retryCount) * 1000));
       }
+    }
+
+    // Check if response is null (all retries failed)
+    if (!response) {
+      return NextResponse.json(
+        { error: 'Voice service is temporarily unavailable. Please try again in a few moments.' },
+        { status: 503 }
+      );
     }
 
     if (!response.ok) {
