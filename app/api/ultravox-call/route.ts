@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
 
         // If we get here, the request succeeded
         break;
-      } catch (error) {
+      } catch (error: unknown) {
         retryCount++;
         console.error(`Ultravox API attempt ${retryCount} failed:`, error);
         
@@ -104,7 +104,7 @@ export async function POST(request: NextRequest) {
               { error: 'Unable to connect to voice service. Please check your internet connection and try again.' },
               { status: 503 }
             );
-          } else if (error.name === 'TimeoutError') {
+          } else if (error instanceof Error && error.name === 'TimeoutError') {
             return NextResponse.json(
               { error: 'Voice service request timed out. Please try again.' },
               { status: 504 }
@@ -157,7 +157,7 @@ export async function POST(request: NextRequest) {
     });
     
     return NextResponse.json(data);
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('API route error:', error);
     
     // Provide more specific error messages
