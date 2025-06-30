@@ -1,7 +1,7 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'VoiceAI Assistant',
+  title: 'PrideAlex',
   description: 'Your AI Conversation Partner',
   icons: {
     icon: 'https://storage.googleapis.com/msgsndr/JBLl8rdfV29DRcGjQ7Rl/media/67fe14cfc7a015d190da94a0.png',
