@@ -207,8 +207,8 @@ export default function HomePage() {
         // Sort client-side by created_at timestamp
         const calls = querySnapshot.docs
           .map(doc => ({ id: doc.id, ...doc.data() }))
-          .filter(call => call.created_at) // Only include calls with timestamps
-          .sort((a, b) => {
+          .filter((call: any) => call.created_at) // Only include calls with timestamps
+          .sort((a: any, b: any) => {
             // Handle Firestore timestamps
             const aTime = a.created_at?.toMillis ? a.created_at.toMillis() : a.created_at;
             const bTime = b.created_at?.toMillis ? b.created_at.toMillis() : b.created_at;
@@ -216,7 +216,7 @@ export default function HomePage() {
           });
 
         if (calls.length > 0) {
-          const latestCall = calls[0];
+          const latestCall = calls[0] as any;
           const transcriptsText = latestCall.transcripts
             ?.map((t: { speaker: string; text: string }) => `${t.speaker}: ${t.text}`)
             .join('\n') || '';
