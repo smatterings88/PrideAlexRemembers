@@ -334,16 +334,18 @@ export default function HomePage() {
       });
       
       return data;
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Error in createUltravoxCall:', error);
       
-      // Provide more specific error messages
+      // Provide more specific error messages with proper type checking
       if (error instanceof TypeError && error.message.includes('fetch')) {
         throw new Error('Unable to connect to voice service. Please check your internet connection and try again.');
-      } else if (error.message.includes('500')) {
+      } else if (error instanceof Error && error.message.includes('500')) {
         throw new Error('Voice service is temporarily unavailable. Please try again in a few moments.');
-      } else {
+      } else if (error instanceof Error) {
         throw error;
+      } else {
+        throw new Error('An unexpected error occurred. Please try again.');
       }
     }
   };
