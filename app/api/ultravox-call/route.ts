@@ -70,6 +70,7 @@ export async function POST(request: NextRequest) {
               userFirstname: firstName || 'User',
               lastCallTranscript: lastCallTranscript || 'No previous call. This is the first call',
               currentTime: currentTime || new Date().toLocaleTimeString(),
+              currentDate: new Date().toLocaleDateString(),
               userLocation: userLocation || 'Unknown Location',
               userTotalCalls: totalCalls?.toString() || '0'
             },
